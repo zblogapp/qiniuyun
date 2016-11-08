@@ -1,12 +1,13 @@
 <?php
 
-require_once "http.php";
-require_once "auth_digest.php";
+require_once("http.php");
+require_once("auth_digest.php");
 
 // ----------------------------------------------------------
 // class Qiniu_PutExtra
 
-class Qiniu_PutExtra {
+class Qiniu_PutExtra
+{
 	public $Params = null;
 	public $MimeType = null;
 	public $Crc32 = 0;
@@ -21,28 +22,43 @@ function Qiniu_Put($upToken, $key, $body, $putExtra) // => ($putRet, $err)
 		$putExtra = new Qiniu_PutExtra;
 	}
 
-	$client = new Qiniu_HttpClient;
-	$client->ajax->open("POST", $QINIU_UP_HOST);
-	$client->ajax->addText('token', $upToken);
-
+	$fields = array('token' => $upToken);
 	if ($key === null) {
 		$fname = '?';
 	} else {
 		$fname = $key;
-		$client->ajax->addText('key', $key);
+		$fields['key'] = $key;
 	}
 	if ($putExtra->CheckCrc) {
-		$client->ajax->addText('crc32', $putExtra->Crc32);
+		$fields['crc32'] = $putExtra->Crc32;
 	}
 	if ($putExtra->Params) {
-		foreach ($putExtra->Params as $k => $v) {
-			$client->ajax->addText($k, $v);
+		foreach ($putExtra->Params as $k=>$v) {
+			$fields[$k] = $v;
 		}
 	}
 
-	$client->ajax->addBinary('file', $body, $fname, $putExtra->MimeType);
+	$files = array(array('file', $fname, $body, $putExtra->MimeType));
 
-	return Qiniu_Client_CallWithForm($client);
+	$client = new Qiniu_HttpClient;
+	return Qiniu_Client_CallWithMultipartForm($client, $QINIU_UP_HOST, $fields, $files);
+}
+
+function createFile($filename, $mime)
+{
+    // PHP 5.5 introduced a CurlFile object that deprecates the old @filename syntax
+    // See: https://wiki.php.net/rfc/curl-file-upload
+    if (function_exists('curl_file_create')) {
+        return curl_file_create($filename, $mime);
+    }
+
+    // Use the old style if using an older version of PHP
+    $value = "@{$filename}";
+    if (!empty($mime)) {
+        $value .= ';type=' . $mime;
+    }
+
+    return $value;
 }
 
 function Qiniu_PutFile($upToken, $key, $localFile, $putExtra) // => ($putRet, $err)
@@ -53,16 +69,9 @@ function Qiniu_PutFile($upToken, $key, $localFile, $putExtra) // => ($putRet, $e
 		$putExtra = new Qiniu_PutExtra;
 	}
 
-	$client = new Qiniu_HttpClient;
-	$client->ajax->open("POST", $QINIU_UP_HOST);
-	$client->ajax->addBinary('file', $localFile, $putExtra->MimeType);
-	$client->ajax->addText('token', $upToken);
-
-	if ($key === null) {
-		$fname = '?';
-	} else {
-		$fname = $key;
-		$client->ajax->addText('key', $key);
+	$fields = array('token' => $upToken, 'file' => createFile($localFile, $putExtra->MimeType));
+	if ($key !== null) {
+		$fields['key'] = $key;
 	}
 	if ($putExtra->CheckCrc) {
 		if ($putExtra->CheckCrc === 1) {
@@ -70,15 +79,17 @@ function Qiniu_PutFile($upToken, $key, $localFile, $putExtra) // => ($putRet, $e
 			$array = unpack('N', pack('H*', $hash));
 			$putExtra->Crc32 = $array[1];
 		}
-		$client->ajax->addText('crc32', sprintf('%u', $putExtra->Crc32));
+		$fields['crc32'] = sprintf('%u', $putExtra->Crc32);
 	}
 	if ($putExtra->Params) {
-		foreach ($putExtra->Params as $k => $v) {
-			$client->ajax->addText($k, $v);
+		foreach ($putExtra->Params as $k=>$v) {
+			$fields[$k] = $v;
 		}
 	}
 
-	return Qiniu_Client_CallWithForm($client, 'multipart/form-data');
+	$client = new Qiniu_HttpClient;
+	return Qiniu_Client_CallWithForm($client, $QINIU_UP_HOST, $fields, 'multipart/form-data');
 }
 
 // ----------------------------------------------------------
+

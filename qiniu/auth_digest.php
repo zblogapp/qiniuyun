@@ -1,7 +1,7 @@
 <?php
 
-require_once "utils.php";
-require_once "conf.php";
+require_once("utils.php");
+require_once("conf.php");
 
 // ----------------------------------------------------------
 
@@ -10,7 +10,8 @@ class Qiniu_Mac {
 	public $AccessKey;
 	public $SecretKey;
 
-	public function __construct($accessKey, $secretKey) {
+	public function __construct($accessKey, $secretKey)
+	{
 		$this->AccessKey = $accessKey;
 		$this->SecretKey = $secretKey;
 	}
@@ -27,19 +28,21 @@ class Qiniu_Mac {
 		return $this->Sign($data) . ':' . $data;
 	}
 
-	public function SignRequest($ajax, $incbody) // => ($token, $error)
+	public function SignRequest($req, $incbody) // => ($token, $error)
 	{
+		$url = $req->URL;
+		$url = parse_url($url['path']);
 		$data = '';
-		if ($ajax->path !== NULL) {
-			$data = $ajax->path;
+		if (isset($url['path'])) {
+			$data = $url['path'];
 		}
-		if ($ajax->query !== NULL) {
-			$data .= '?' . $ajax->query;
+		if (isset($url['query'])) {
+			$data .= '?' . $url['query'];
 		}
 		$data .= "\n";
 
 		if ($incbody) {
-			$data .= $ajax->Body;
+			$data .= $req->Body;
 		}
 		return $this->Sign($data);
 	}
@@ -62,7 +65,8 @@ class Qiniu_Mac {
 	}
 }
 
-function Qiniu_SetKeys($accessKey, $secretKey) {
+function Qiniu_SetKeys($accessKey, $secretKey)
+{
 	global $QINIU_ACCESS_KEY;
 	global $QINIU_SECRET_KEY;
 
@@ -93,3 +97,4 @@ function Qiniu_SignWithData($mac, $data) // => $token
 }
 
 // ----------------------------------------------------------
+
