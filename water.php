@@ -6,22 +6,22 @@ $action = 'root';
 if (!$zbp->CheckRights($action)) {$zbp->ShowError(6);die();}
 if (!$zbp->CheckPlugin('qiniuyun')) {$zbp->ShowError(48);die();}
 init_qiniu();
-$blogtitle='七牛云存储';
+$blogtitle = '七牛云存储';
 if (count($_POST) > 0)
 {
-	$qiniu->cfg->water_enable = GetVars('qiniu-water-enable', 'POST');
-	$qiniu->cfg->water_overwrite = GetVars('qiniu-water-overwrite', 'POST');
-	$qiniu->cfg->water_dissolve = GetVars('qiniu-water-dissolve', 'POST');
-	$qiniu->cfg->water_gravity = GetVars('qiniu-water-gravity', 'POST');
-	$qiniu->cfg->water_dx = GetVars('qiniu-water-dx', 'POST');
-	$qiniu->cfg->water_dy = GetVars('qiniu-water-dy', 'POST');
-	$qiniu->save_config();
-	if (count($_FILES) > 0)
-	{
-		move_uploaded_file($_FILES['qiniu-water-upload']['tmp_name'], dirname(__FILE__) . '/water.png');//先上传到本地
-	}
-	$zbp->SetHint('good');
-	Redirect('water.php');
+    $qiniu->cfg->water_enable = GetVars('qiniu-water-enable', 'POST');
+    $qiniu->cfg->water_overwrite = GetVars('qiniu-water-overwrite', 'POST');
+    $qiniu->cfg->water_dissolve = GetVars('qiniu-water-dissolve', 'POST');
+    $qiniu->cfg->water_gravity = GetVars('qiniu-water-gravity', 'POST');
+    $qiniu->cfg->water_dx = GetVars('qiniu-water-dx', 'POST');
+    $qiniu->cfg->water_dy = GetVars('qiniu-water-dy', 'POST');
+    $qiniu->save_config();
+    if (count($_FILES) > 0)
+    {
+        move_uploaded_file($_FILES['qiniu-water-upload']['tmp_name'], dirname(__FILE__) . '/water.png');//先上传到本地
+    }
+    $zbp->SetHint('good');
+    Redirect('water.php');
 }
 
 require $blogpath . 'zb_system/admin/admin_header.php';
@@ -108,9 +108,9 @@ RunTime();
 
 function output_radio($name)
 {
-	echo '<input type="radio" id="text-water-gravity-' . $name;
-	echo '" name="qiniu-water-gravity" value="' . $name;
-	echo '" ' . (strtolower($GLOBALS['qiniu']->water_gravity) == strtolower($name) ? ' checked="checked"' : '');
-	echo '/><label for="text-water-gravity-' . $name . '">' . $name . '</label>';
+    echo '<input type="radio" id="text-water-gravity-' . $name;
+    echo '" name="qiniu-water-gravity" value="' . $name;
+    echo '" ' . (strtolower($GLOBALS['qiniu']->water_gravity) == strtolower($name) ? ' checked="checked"' : '');
+    echo '/><label for="text-water-gravity-' . $name . '">' . $name . '</label>';
 }
 ?>

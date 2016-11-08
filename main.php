@@ -6,17 +6,17 @@ $action = 'root';
 if (!$zbp->CheckRights($action)) {$zbp->ShowError(6);die();}
 if (!$zbp->CheckPlugin('qiniuyun')) {$zbp->ShowError(48);die();}
 init_qiniu();
-$blogtitle='七牛云存储';
+$blogtitle = '七牛云存储';
 if (count($_POST) > 0)
 {
-	$qiniu->cfg->access_token = GetVars('qiniu-accesstoken', 'POST');
-	$qiniu->cfg->secret_key = GetVars('qiniu-secretkey', 'POST');
-	$qiniu->cfg->bucket = GetVars('qiniu-bucket', 'POST');
-	$qiniu->cfg->domain = GetVars('qiniu-domain', 'POST');
-	$qiniu->cfg->cloudpath = GetVars('qiniu-cloudpath', 'POST');
-	$qiniu->save_config();
-	$zbp->SetHint('good');
-	Redirect('main.php');
+    $qiniu->cfg->access_token = GetVars('qiniu-accesstoken', 'POST');
+    $qiniu->cfg->secret_key = GetVars('qiniu-secretkey', 'POST');
+    $qiniu->cfg->bucket = GetVars('qiniu-bucket', 'POST');
+    $qiniu->cfg->domain = GetVars('qiniu-domain', 'POST');
+    $qiniu->cfg->cloudpath = GetVars('qiniu-cloudpath', 'POST');
+    $qiniu->save_config();
+    $zbp->SetHint('good');
+    Redirect('main.php');
 }
 
 require $blogpath . 'zb_system/admin/admin_header.php';

@@ -6,16 +6,16 @@ $action = 'root';
 if (!$zbp->CheckRights($action)) {$zbp->ShowError(6);die();}
 if (!$zbp->CheckPlugin('qiniuyun')) {$zbp->ShowError(48);die();}
 init_qiniu();
-$blogtitle='七牛云存储';
+$blogtitle = '七牛云存储';
 if (count($_POST) > 0)
 {
-	$qiniu->cfg->thumbnail_quality = GetVars('qiniu-thumbnail-quality', 'POST');
-	$qiniu->cfg->thumbnail_longedge = GetVars('qiniu-thumbnail-longedge', 'POST');
-	$qiniu->cfg->thumbnail_shortedge = GetVars('qiniu-thumbnail-shortedge', 'POST');
-	$qiniu->cfg->thumbnail_cut = GetVars('qiniu-thumbnail-cut', 'POST');
-	$qiniu->save_config();
-	$zbp->SetHint('good');
-	Redirect('main.php');
+    $qiniu->cfg->thumbnail_quality = GetVars('qiniu-thumbnail-quality', 'POST');
+    $qiniu->cfg->thumbnail_longedge = GetVars('qiniu-thumbnail-longedge', 'POST');
+    $qiniu->cfg->thumbnail_shortedge = GetVars('qiniu-thumbnail-shortedge', 'POST');
+    $qiniu->cfg->thumbnail_cut = GetVars('qiniu-thumbnail-cut', 'POST');
+    $qiniu->save_config();
+    $zbp->SetHint('good');
+    Redirect('main.php');
 }
 
 require $blogpath . 'zb_system/admin/admin_header.php';
