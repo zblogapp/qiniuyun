@@ -79,8 +79,14 @@ function qiniuyun_thumbnail_url($content) {
     //1. 有七牛，调七牛
     //2. 没七牛，调首图
     //3. 都没图，返空值
+    $url = '';
+    if (preg_match('/http|https/si', $qiniu->domain)) {
+        $url = $qiniu->domain;
+    } else {
+        $url = 'http://' . $qiniu->domain;
+    }
     $pattern = "/<img.*?src=[\'|\"](.*?(?:[\.gif|\.jpg|\.png]))[\'|\"].*?[\/]?>/i";
-    $qiniu_pattern = "/<img.*?src=[\'|\"](https?\:\/\/" . str_replace('.', '\.', $qiniu->domain) . ".*?(?:[\.gif|\.jpg|\.png]))[\'|\"].*?[\/]?>/i";
+    $qiniu_pattern = "/<img.*?src=[\'|\"](" . str_replace('/', '\/', preg_quote($url)) . ".*?(?:[\.gif|\.jpg|\.png]))[\'|\"].*?[\/]?>/i";
     $match_qiniu = null;
     $match = null;
 
