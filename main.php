@@ -39,12 +39,12 @@ require $blogpath . 'zb_system/admin/admin_top.php';
         </tr>
         <tr>
           <td><p><b>· Access Token</b><br/>
-              <span class="note">&nbsp;如果您没有七牛Access Token的话，可以点击<a href="https://portal.qiniu.com/setting/key" target="_blank">https://portal.qiniu.com/setting/key</a>这里去获取。</span></p></td>
+              <span class="note">&nbsp;如果您没有七牛Access Token的话，可以点击<a href="https://portal.qiniu.com/user/key" target="_blank">https://portal.qiniu.com/user/key</a>这里去获取。</span></p></td>
           <td><input type="text" id="text-accesstoken" name="qiniu-accesstoken" value="<?php echo qiniu_display_text('access_token')?>" /></td>
         </tr>
         <tr>
           <td><p><b>· Secret Key</b><br/>
-              <span class="note">&nbsp;如果您没有七牛Secret Key的话，可以点击<a href="https://portal.qiniu.com/setting/key" target="_blank">https://portal.qiniu.com/setting/key</a>这里去获取。</span></p></td>
+              <span class="note">&nbsp;如果您没有七牛Secret Key的话，可以点击<a href="https://portal.qiniu.com/user/key" target="_blank">https://portal.qiniu.com/user/key</a>这里去获取。</span></p></td>
           <td><input type="password" id="text-secretkey" name="qiniu-secretkey" value="<?php echo qiniu_display_text('secret_key')?>" /></td>
         </tr>
         <tr>
@@ -59,7 +59,7 @@ require $blogpath . 'zb_system/admin/admin_top.php';
         </tr>
         <tr>
           <td><p><b>· 绑定域名</b><br/>
-              <span class="note">&nbsp;如果您要使用<?php echo qiniu_display_text('bucket')?>.qiniudn.com，请留空。</p></td>
+              <span class="note">&nbsp;如果您要使用http://<?php echo qiniu_display_text('bucket')?>.qiniudn.com，请留空。不写协议【http://】或【https://】将默认为http。</p></td>
           <td><input type="text" id="text-domain" name="qiniu-domain" value="<?php echo qiniu_display_text('domain')?>" /></td>
         </tr>
       </table>

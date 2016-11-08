@@ -3,7 +3,7 @@ include_once dirname(__FILE__) . "/qiniu/rs.php";
 include_once dirname(__FILE__) . "/qiniu/io.php";
 include_once dirname(__FILE__) . "/qiniu.class.php";
 include_once dirname(__FILE__) . "/function.php";
-//define('QINIU_WATER_URL', 'http://su.bdimg.com/static/superplus/img/logo_white.png');
+//define('QINIU_WATER_URL', 'https://ss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/img/logo/logo_white_fe6da1ec.png');
 define('QINIU_WATER_URL', $bloghost . 'zb_users/plugin/qiniuyun/water.png');
 $qiniu = new QINIU();
 
