@@ -24,7 +24,15 @@ function qiniuyun_upload_url(&$upload) {
     init_qiniuyun();
     global $zbp;global $qiniuyun;
     $file = $zbp->GetUploadByID($upload->ID);
-    $url = $qiniuyun->get_url($file->Metas->qiniuyun_key, ($qiniuyun->water_enable && !$qiniuyun->water_overwrite));
+
+    $is_url_water = ($qiniuyun->water_enable && !$qiniuyun->water_overwrite);
+    $url = $qiniuyun->get_url($file->Metas->qiniuyun_key, $is_url_water);
+
+    if (!$qiniuyun->water_enable) {
+        if ($qiniuyun->image_style != '') {
+            $url .= '?' . $qiniuyun->image_style;
+        }
+    }
 
     return $url;
 }

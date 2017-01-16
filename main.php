@@ -15,6 +15,7 @@ if (count($_POST) > 0)
     $qiniuyun->cfg->domain = GetVars('qiniu-domain', 'POST');
     $qiniuyun->cfg->cloudpath = GetVars('qiniu-cloudpath', 'POST');
     $qiniuyun->cfg->upload_domain = GetVars('qiniu-upload-domain', 'POST');
+    $qiniuyun->cfg->image_style = GetVars('qiniu-image-style', 'POST');
     $qiniuyun->save_config();
     $zbp->SetHint('good');
     Redirect('main.php');
@@ -72,6 +73,11 @@ require $blogpath . 'zb_system/admin/admin_top.php';
           <td><p><b>· 绑定域名</b><br/>
               <span class="note">&nbsp;见七牛后台“融合 CDN 加速域名”，不写协议【http://】或【https://】将默认为http。</p></td>
           <td><input type="text" id="text-domain" name="qiniu-domain" value="<?php echo qiniuyun_display_text('domain')?>" /></td>
+        </tr>
+        <tr>
+          <td><p><b>· 图片样式</b><br/>
+              <span class="note">&nbsp;见七牛后台“图片样式”，若在插件后台开启水印则优先显示水印。另外，“图片样式”功能开启后，缩略图函数将无法使用，你只能在模板里手动获取图片Url后添加图片样式。</p></td>
+          <td><input type="text" id="text-image-style" name="qiniu-image-style" value="<?php echo qiniuyun_display_text('image_style')?>" /></td>
         </tr>
       </table>
       <br />

@@ -67,6 +67,7 @@ class QINIUYUN {
 
     public function init_1_1_config() {
         $this->cfg->version = '1.1';
+        $this->cfg->image_style = '';
         $this->cfg->upload_domain = 'http://upload.qiniu.com';
 
         return $this->save_config();
@@ -89,6 +90,7 @@ class QINIUYUN {
         $this->cfg->thumbnail_shortedge = '300';
         $this->cfg->thumbnail_cut = false;
         $this->cfg->upload_domain = 'http://upload.qiniu.com';
+        $this->cfg->image_style = '';
 
         $this->cfg->version = '1.1';
 
