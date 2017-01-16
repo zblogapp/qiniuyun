@@ -30,7 +30,7 @@ function qiniuyun_upload_url(&$upload) {
 
     if (!$qiniuyun->water_enable) {
         if ($qiniuyun->image_style != '') {
-            $url .= '?' . $qiniuyun->image_style;
+            $url .= '-' . $qiniuyun->image_style;
         }
     }
 
