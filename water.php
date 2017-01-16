@@ -5,17 +5,17 @@ $zbp->Load();
 $action = 'root';
 if (!$zbp->CheckRights($action)) {$zbp->ShowError(6);die();}
 if (!$zbp->CheckPlugin('qiniuyun')) {$zbp->ShowError(48);die();}
-init_qiniu();
+init_qiniuyun();
 $blogtitle = '七牛云存储';
 if (count($_POST) > 0)
 {
-    $qiniu->cfg->water_enable = GetVars('qiniu-water-enable', 'POST');
-    $qiniu->cfg->water_overwrite = GetVars('qiniu-water-overwrite', 'POST');
-    $qiniu->cfg->water_dissolve = GetVars('qiniu-water-dissolve', 'POST');
-    $qiniu->cfg->water_gravity = GetVars('qiniu-water-gravity', 'POST');
-    $qiniu->cfg->water_dx = GetVars('qiniu-water-dx', 'POST');
-    $qiniu->cfg->water_dy = GetVars('qiniu-water-dy', 'POST');
-    $qiniu->save_config();
+    $qiniuyun->cfg->water_enable = GetVars('qiniu-water-enable', 'POST');
+    $qiniuyun->cfg->water_overwrite = GetVars('qiniu-water-overwrite', 'POST');
+    $qiniuyun->cfg->water_dissolve = GetVars('qiniu-water-dissolve', 'POST');
+    $qiniuyun->cfg->water_gravity = GetVars('qiniu-water-gravity', 'POST');
+    $qiniuyun->cfg->water_dx = GetVars('qiniu-water-dx', 'POST');
+    $qiniuyun->cfg->water_dy = GetVars('qiniu-water-dy', 'POST');
+    $qiniuyun->save_config();
     if (count($_FILES) > 0)
     {
         move_uploaded_file($_FILES['qiniu-water-upload']['tmp_name'], dirname(__FILE__) . '/water.png');//先上传到本地
@@ -33,7 +33,7 @@ require $blogpath . 'zb_system/admin/admin_top.php';
 <div id="divMain">
   <div class="divHeader"><?php echo $blogtitle;?></div>
   <div class="SubMenu">
-    <?php qiniuyun_SubMenu(1);?>
+    <?php Qiniuyun_SubMenu(1);?>
   </div>
   <div id="divMain2">
     <form id="form-postsubmit" name="form-postsubmit" method="post" action="water.php" enctype="multipart/form-data">
@@ -45,12 +45,12 @@ require $blogpath . 'zb_system/admin/admin_top.php';
         <tr>
           <td><p><b>· 开启水印</b><br/>
               <span class="note">&nbsp;</span></p></td>
-          <td><input type="text" id="text-water-enable" name="qiniu-water-enable" class="checkbox" value="<?php echo qiniu_display_text('water_enable')?>" /></td>
+          <td><input type="text" id="text-water-enable" name="qiniu-water-enable" class="checkbox" value="<?php echo qiniuyun_display_text('water_enable')?>" /></td>
         </tr>
         <tr>
           <td><p><b>· 覆盖原图</b><br/>
               <span class="note">&nbsp;慎选：开启后会使得上传速度大大降低</span></p></td>
-          <td><input type="password" id="text-water-overwrite" name="qiniu-water-overwrite" class="checkbox" value="<?php echo qiniu_display_text('water_overwrite')?>" /></td>
+          <td><input type="password" id="text-water-overwrite" name="qiniu-water-overwrite" class="checkbox" value="<?php echo qiniuyun_display_text('water_overwrite')?>" /></td>
         </tr>
         <tr>
           <td><p><b>· 水印图片</b><br/>
@@ -60,7 +60,7 @@ require $blogpath . 'zb_system/admin/admin_top.php';
         <tr>
           <td><p><b>· 水印透明度</b><br/>
               <span class="note">&nbsp;透明度，取值范围1-100，缺省值为100（完全不透明）</p></td>
-          <td><input type="number" min="1" max="100" id="text-water-dissolve" name="qiniu-water-dissolve" value="<?php echo qiniu_display_text('water_dissolve')?>" /></td>
+          <td><input type="number" min="1" max="100" id="text-water-dissolve" name="qiniu-water-dissolve" value="<?php echo qiniuyun_display_text('water_dissolve')?>" /></td>
         </tr>
         <tr>
           <td><p><b>· 水印位置</b><br/>
@@ -89,12 +89,12 @@ require $blogpath . 'zb_system/admin/admin_top.php';
         <tr>
           <td><p><b>· 横轴边距</b><br/>
               <span class="note">&nbsp;单位:像素(px)，缺省值为10</p></td>
-          <td><input type="number" min="1" max="100" id="text-water-dx" name="qiniu-water-dx" value="<?php echo qiniu_display_text('water_dx')?>" /></td>
+          <td><input type="number" min="1" max="100" id="text-water-dx" name="qiniu-water-dx" value="<?php echo qiniuyun_display_text('water_dx')?>" /></td>
         </tr>
         <tr>
           <td><p><b>· 纵轴边距</b><br/>
               <span class="note">&nbsp;单位:像素(px)，缺省值为10</p></td>
-          <td><input type="number" min="1" max="100" id="text-water-dy" name="qiniu-water-dy" value="<?php echo qiniu_display_text('water_dy')?>" /></td>
+          <td><input type="number" min="1" max="100" id="text-water-dy" name="qiniu-water-dy" value="<?php echo qiniuyun_display_text('water_dy')?>" /></td>
         </tr>
       </table>
       <br />
@@ -110,7 +110,7 @@ function output_radio($name)
 {
     echo '<input type="radio" id="text-water-gravity-' . $name;
     echo '" name="qiniu-water-gravity" value="' . $name;
-    echo '" ' . (strtolower($GLOBALS['qiniu']->water_gravity) == strtolower($name) ? ' checked="checked"' : '');
+    echo '" ' . (strtolower($GLOBALS['qiniuyun']->water_gravity) == strtolower($name) ? ' checked="checked"' : '');
     echo '/><label for="text-water-gravity-' . $name . '">' . $name . '</label>';
 }
 ?>

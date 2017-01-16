@@ -1,8 +1,10 @@
 <?php
-class QINIU {
+class QINIUYUN {
     private $data = array();
     private $cfg = null;
     private $is_init = false;
+
+    public $lastError = null;
 
     public function __construct() {
     }
@@ -20,7 +22,7 @@ class QINIU {
         }
 
         if ($name == 'access_token' || $name == 'secret_key') {
-            Qiniu_SetKeys($this->access_token, $this->secret_key);
+            Qiniuyun_SetKeys($this->access_token, $this->secret_key);
         }
 
         return true;
@@ -57,7 +59,7 @@ class QINIU {
             $this->init_config();
         }
 
-        Qiniu_SetKeys($this->access_token, $this->secret_key);
+        Qiniuyun_SetKeys($this->access_token, $this->secret_key);
         $this->is_init = true;
 
         return true;
@@ -103,28 +105,29 @@ class QINIU {
     }
 
     public function get_url($key, $water = false) {
-        $return = Qiniu_RS_MakeBaseUrl($this->domain, $key);
-        if ($water && qiniu_test_image($return)) {
-            $return = $this->get_waterimage_url($return, QINIU_WATER_URL, $this->water_dissolve, $this->water_gravity, $this->water_dx, $this->water_dy);
+        $return = Qiniuyun_RS_MakeBaseUrl($this->domain, $key);
+        if ($water && Qiniuyun_test_image($return)) {
+            $return = $this->get_waterimage_url($return, QINIUYUN_WATER_URL, $this->water_dissolve, $this->water_gravity, $this->water_dx, $this->water_dy);
         }
 
         return $return;
     }
 
     public function delete($key) {
-        $client = new Qiniu_MacHttpClient(null);
+        $client = new Qiniuyun_MacHttpClient(null);
 
-        return Qiniu_RS_Delete($client, $this->bucket, $key);
+        return QINIUYUN_RS_Delete($client, $this->bucket, $key);
     }
 
     public function upload($filepath_cloud, $filepath_local, $watermark = false) {
+        $GLOBALS['QINIUYUN_UP_HOST'] = $this->cfg->upload_domain;
         $upload_token = $this->get_upload_token();
-        $putExtra = new Qiniu_PutExtra();
+        $putExtra = new Qiniuyun_PutExtra();
         $putExtra->Crc32 = 1;
-        list($ret, $err) = Qiniu_PutFile($upload_token, $filepath_cloud, $filepath_local, $putExtra);
+        list($ret, $err) = Qiniuyun_PutFile($upload_token, $filepath_cloud, $filepath_local, $putExtra);
         if ($watermark && $err == null) {
             $url = $this->get_url($ret['key'], true);
-            if (!qiniu_test_image($url)) {
+            if (!qiniuyun_test_image($url)) {
                 return $ret;
             }
 
@@ -136,12 +139,13 @@ class QINIU {
 
             return $return;
         }
+        $this->lastError = $err;
 
         return $ret;
     }
 
     private function get_upload_token() {
-        $putPolicy = new Qiniu_RS_PutPolicy($this->bucket);
+        $putPolicy = new QINIUYUN_RS_PutPolicy($this->bucket);
 
         return $putPolicy->Token(null);
     }

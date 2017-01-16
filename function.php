@@ -17,21 +17,21 @@ function qiniuyun_SubMenu($id)
 }
 
 
-function qiniu_display_text($param)
+function qiniuyun_display_text($param)
 {
-    echo TransferHTML($GLOBALS['qiniu']->cfg->$param, '[textarea]');
+    echo TransferHTML($GLOBALS['qiniuyun']->cfg->$param, '[textarea]');
 }
 
-function qiniu_output_option($value, $param, $text)
+function qiniuyun_output_option($value, $param, $text)
 {
     echo "<option value=\"$value\" ";
-    if ($GLOBALS['qiniu']->cfg->$param == $value) {
+    if ($GLOBALS['qiniuyun']->cfg->$param == $value) {
         echo ' selected';
     }
     echo ">$text</option>";
 }
 
-function qiniu_test_image($url)
+function qiniuyun_test_image($url)
 {
     return preg_match("/\.jpe?g|gif|png|svg|bmp|tiff$/i", $url);
 }
