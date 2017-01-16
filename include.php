@@ -49,6 +49,7 @@ function qiniuyun_upload_savefile($tmp, &$upload) {
     $cloud_path = $qiniu->cloudpath . date("Y/m/", time()) . $file_name; //构造云文件名
 
     $ret = $qiniu->upload($cloud_path, $file_path, $upload_water);
+
     $upload->Metas->qiniu_key = $ret['key'];
 
     unlink($file_path);

@@ -14,6 +14,7 @@ if (count($_POST) > 0)
     $qiniu->cfg->bucket = GetVars('qiniu-bucket', 'POST');
     $qiniu->cfg->domain = GetVars('qiniu-domain', 'POST');
     $qiniu->cfg->cloudpath = GetVars('qiniu-cloudpath', 'POST');
+    $qiniu->cfg->upload_domain = GetVars('qiniu-upload-domain', 'POST');
     $qiniu->save_config();
     $zbp->SetHint('good');
     Redirect('main.php');
@@ -53,13 +54,23 @@ require $blogpath . 'zb_system/admin/admin_top.php';
           <td><input type="text" id="text-bucket" name="qiniu-bucket" value="<?php echo qiniu_display_text('bucket')?>" /></td>
         </tr>
         <tr>
+          <td><p><b>· 上传区域</b><br/>
+              <span class="note">&nbsp;如果您要使用http://<?php echo qiniu_display_text('bucket')?>.qiniudn.com，请留空。不写协议【http://】或【https://】将默认为http。</p></td>
+          <td><select name="qiniu-upload-domain">
+              <?php qiniu_output_option('http://upload.qiniu.com', 'upload_domain', '默认（可能无法成功）');?>
+              <?php qiniu_output_option('http://up-z0.qiniu.com', 'upload_domain', '华东(http://up-z0.qiniu.com)');?>
+              <?php qiniu_output_option('http://up-z1.qiniu.com', 'upload_domain', '华北(http://up-z1.qiniu.com)');?>
+              <?php qiniu_output_option('http://up-z2.qiniu.com', 'upload_domain', '华南(http://up-z2.qiniu.com)');?>
+          </select>
+        </tr>
+        <tr>
           <td><p><b>· 上传目录</b><br/>
               <span class="note">&nbsp;若为根目录请留空；前面不需要加“/”，且最后一位必须为“/”。</p></td>
           <td><input type="text" id="text-cloudpath" name="qiniu-cloudpath" value="<?php echo qiniu_display_text('cloudpath')?>" /></td>
         </tr>
         <tr>
           <td><p><b>· 绑定域名</b><br/>
-              <span class="note">&nbsp;如果您要使用http://<?php echo qiniu_display_text('bucket')?>.qiniudn.com，请留空。不写协议【http://】或【https://】将默认为http。</p></td>
+              <span class="note">&nbsp;见七牛后台“融合 CDN 加速域名”，不写协议【http://】或【https://】将默认为http。</p></td>
           <td><input type="text" id="text-domain" name="qiniu-domain" value="<?php echo qiniu_display_text('domain')?>" /></td>
         </tr>
       </table>

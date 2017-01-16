@@ -22,6 +22,15 @@ function qiniu_display_text($param)
     echo TransferHTML($GLOBALS['qiniu']->cfg->$param, '[textarea]');
 }
 
+function qiniu_output_option($value, $param, $text)
+{
+    echo "<option value=\"$value\" ";
+    if ($GLOBALS['qiniu']->cfg->$param == $value) {
+        echo ' selected';
+    }
+    echo ">$text</option>";
+}
+
 function qiniu_test_image($url)
 {
     return preg_match("/\.jpe?g|gif|png|svg|bmp|tiff$/i", $url);

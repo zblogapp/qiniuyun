@@ -48,7 +48,12 @@ class QINIU {
 
         global $zbp;
         $this->cfg = $zbp->Config('qiniuyun');
-        if ($this->cfg->version != '1.0') {
+
+        if ($this->cfg->version == '1.0') {
+            $this->init_1_1_config();
+        } elseif ($this->cfg->version == '1.1') {
+            // do nothing
+        } else {
             $this->init_config();
         }
 
@@ -56,6 +61,13 @@ class QINIU {
         $this->is_init = true;
 
         return true;
+    }
+
+    public function init_1_1_config() {
+        $this->cfg->version = '1.1';
+        $this->cfg->upload_domain = 'http://upload.qiniu.com';
+
+        return $this->save_config();
     }
 
     public function init_config() {
@@ -74,8 +86,9 @@ class QINIU {
         $this->cfg->thumbnail_longedge = '300';
         $this->cfg->thumbnail_shortedge = '300';
         $this->cfg->thumbnail_cut = false;
+        $this->cfg->upload_domain = 'http://upload.qiniu.com';
 
-        $this->cfg->version = '1.0';
+        $this->cfg->version = '1.1';
 
         return $this->save_config();
 
