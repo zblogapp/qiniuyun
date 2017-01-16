@@ -71,11 +71,11 @@ class Qiniuyun_Mac {
 
 function Qiniuyun_SetKeys($accessKey, $secretKey)
 {
-    global $QINIU_ACCESS_KEY;
-    global $QINIU_SECRET_KEY;
+    global $QINIUYUN_ACCESS_KEY;
+    global $QINIUYUN_SECRET_KEY;
 
-    $QINIU_ACCESS_KEY = $accessKey;
-    $QINIU_SECRET_KEY = $secretKey;
+    $QINIUYUN_ACCESS_KEY = $accessKey;
+    $QINIUYUN_SECRET_KEY = $secretKey;
 }
 
 function Qiniuyun_RequireMac($mac) // => $mac
@@ -84,10 +84,10 @@ function Qiniuyun_RequireMac($mac) // => $mac
         return $mac;
     }
 
-    global $QINIU_ACCESS_KEY;
-    global $QINIU_SECRET_KEY;
+    global $QINIUYUN_ACCESS_KEY;
+    global $QINIUYUN_SECRET_KEY;
 
-    return new Qiniuyun_Mac($QINIU_ACCESS_KEY, $QINIU_SECRET_KEY);
+    return new Qiniuyun_Mac($QINIUYUN_ACCESS_KEY, $QINIUYUN_SECRET_KEY);
 }
 
 function Qiniuyun_Sign($mac, $data) // => $token

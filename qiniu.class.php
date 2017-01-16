@@ -132,6 +132,7 @@ class QINIUYUN {
             }
 
             $local_url = $this->download_waterimage($url);
+
             $this->delete($ret['key']);
             $return = $this->upload($filepath_cloud, $local_url, false);
 

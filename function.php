@@ -2,9 +2,10 @@
 function qiniuyun_SubMenu($id)
 {
     $arySubMenu = array(
-        0 => array('七牛账户设置', 'main.php', 'left', false),
-        1 => array('水印设置', 'water.php', 'left', false),
-        2 => array('缩略图设置', 'thumbnail.php', 'left', false)
+        array('七牛账户设置', 'main.php', 'left', false),
+        array('水印设置', 'water.php', 'left', false),
+        array('缩略图设置', 'thumbnail.php', 'left', false),
+        array('验证设置', 'test.php', 'left', false)
     );
 
     

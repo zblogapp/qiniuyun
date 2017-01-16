@@ -186,34 +186,34 @@ function QINIUYUN_RS_URIMove($bucketSrc, $keySrc, $bucketDest, $keyDest)
 
 function QINIUYUN_RS_Stat($self, $bucket, $key) // => ($statRet, $error)
 {
-    global $QINIU_RS_HOST;
+    global $QINIUYUN_RS_HOST;
     $uri = QINIUYUN_RS_URIStat($bucket, $key);
 
-    return Qiniuyun_Client_Call($self, $QINIU_RS_HOST . $uri);
+    return Qiniuyun_Client_Call($self, $QINIUYUN_RS_HOST . $uri);
 }
 
 function QINIUYUN_RS_Delete($self, $bucket, $key) // => $error
 {
-    global $QINIU_RS_HOST;
+    global $QINIUYUN_RS_HOST;
     $uri = QINIUYUN_RS_URIDelete($bucket, $key);
 
-    return Qiniuyun_Client_CallNoRet($self, $QINIU_RS_HOST . $uri);
+    return Qiniuyun_Client_CallNoRet($self, $QINIUYUN_RS_HOST . $uri);
 }
 
 function QINIUYUN_RS_Move($self, $bucketSrc, $keySrc, $bucketDest, $keyDest) // => $error
 {
-    global $QINIU_RS_HOST;
+    global $QINIUYUN_RS_HOST;
     $uri = QINIUYUN_RS_URIMove($bucketSrc, $keySrc, $bucketDest, $keyDest);
 
-    return Qiniuyun_Client_CallNoRet($self, $QINIU_RS_HOST . $uri);
+    return Qiniuyun_Client_CallNoRet($self, $QINIUYUN_RS_HOST . $uri);
 }
 
 function QINIUYUN_RS_Copy($self, $bucketSrc, $keySrc, $bucketDest, $keyDest) // => $error
 {
-    global $QINIU_RS_HOST;
+    global $QINIUYUN_RS_HOST;
     $uri = QINIUYUN_RS_URICopy($bucketSrc, $keySrc, $bucketDest, $keyDest);
 
-    return Qiniuyun_Client_CallNoRet($self, $QINIU_RS_HOST . $uri);
+    return Qiniuyun_Client_CallNoRet($self, $QINIUYUN_RS_HOST . $uri);
 }
 
 // ----------------------------------------------------------
@@ -221,8 +221,8 @@ function QINIUYUN_RS_Copy($self, $bucketSrc, $keySrc, $bucketDest, $keyDest) // 
 
 function QINIUYUN_RS_Batch($self, $ops) // => ($data, $error)
 {
-    global $QINIU_RS_HOST;
-    $url = $QINIU_RS_HOST . '/batch';
+    global $QINIUYUN_RS_HOST;
+    $url = $QINIUYUN_RS_HOST . '/batch';
     $params = 'op=' . implode('&op=', $ops);
 
     return Qiniuyun_Client_CallWithForm($self, $url, $params);
@@ -277,10 +277,10 @@ function QINIUYUN_RS_BatchCopy($self, $entryPairs)
 function QINIUYUN_RS_Fetch($self, $url, $bucket, $key)
 {
 
-    global $QINIU_IOVIP_HOST;
+    global $QINIUYUN_IOVIP_HOST;
     $path = '/fetch/' . Qiniuyun_Encode($url) . '/to/' . Qiniuyun_Encode("$bucket:$key");
 
-    return Qiniuyun_Client_CallNoRet($self, $QINIU_IOVIP_HOST . $path);
+    return Qiniuyun_Client_CallNoRet($self, $QINIUYUN_IOVIP_HOST . $path);
 }
 
 // ----------------------------------------------------------

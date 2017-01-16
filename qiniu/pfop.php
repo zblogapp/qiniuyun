@@ -16,7 +16,7 @@ class Qiniuyun_Pfop {
     public function MakeRequest($self)
     {
 
-        global $QINIU_API_HOST;
+        global $QINIUYUN_API_HOST;
 
         $ReqParams = array(
             'bucket' => $this->Bucket,
@@ -27,7 +27,7 @@ class Qiniuyun_Pfop {
             'pipeline' => $this->Pipeline
         );
 
-        $url = $QINIU_API_HOST . '/pfop/';
+        $url = $QINIUYUN_API_HOST . '/pfop/';
 
         return Qiniuyun_Client_CallWithForm($self, $url, $ReqParams);
     }
@@ -36,9 +36,9 @@ class Qiniuyun_Pfop {
 
 function Qiniuyun_PfopStatus($client, $id)
 {
-    global $QINIU_API_HOST;
+    global $QINIUYUN_API_HOST;
 
-    $url = $QINIU_API_HOST . '/status/get/prefop?';
+    $url = $QINIUYUN_API_HOST . '/status/get/prefop?';
     $params = array('id' => $id);
 
     return Qiniuyun_Client_CallWithForm($client, $url, $params);

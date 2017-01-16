@@ -25,12 +25,12 @@ class Qiniuyun_Rio_PutExtra
 // ----------------------------------------------------------
 // func Qiniuyun_Rio_BlockCount
 
-define('QINIU_RIO_BLOCK_BITS', 22);
-define('QINIU_RIO_BLOCK_SIZE', 1 << QINIU_RIO_BLOCK_BITS); // 4M
+define('QINIUYUN_RIO_BLOCK_BITS', 22);
+define('QINIUYUN_RIO_BLOCK_SIZE', 1 << QINIUYUN_RIO_BLOCK_BITS); // 4M
 
 function Qiniuyun_Rio_BlockCount($fsize) // => $blockCnt
 {
-    return ($fsize + (QINIU_RIO_BLOCK_SIZE - 1)) >> QINIU_RIO_BLOCK_BITS;
+    return ($fsize + (QINIUYUN_RIO_BLOCK_SIZE - 1)) >> QINIUYUN_RIO_BLOCK_BITS;
 }
 
 // ----------------------------------------------------------
@@ -114,7 +114,7 @@ class Qiniuyun_Rio_UploadClient
 
 function Qiniuyun_Rio_Put($upToken, $key, $body, $fsize, $putExtra) // => ($putRet, $err)
 {
-    global $QINIU_UP_HOST;
+    global $QINIUYUN_UP_HOST;
 
     $self = new Qiniuyun_Rio_UploadClient($upToken);
 
@@ -125,13 +125,13 @@ function Qiniuyun_Rio_Put($upToken, $key, $body, $fsize, $putExtra) // => ($putR
         $tryTimes = ($putExtra->TryTimes > 0) ? $putExtra->TryTimes : 1;
         $blkputRet = null;
         $err = null;
-        if ($fsize < $uploaded + QINIU_RIO_BLOCK_SIZE) {
+        if ($fsize < $uploaded + QINIUYUN_RIO_BLOCK_SIZE) {
             $bsize = $fsize - $uploaded;
         } else {
-            $bsize = QINIU_RIO_BLOCK_SIZE;
+            $bsize = QINIUYUN_RIO_BLOCK_SIZE;
         }
         while ($tried < $tryTimes) {
-            list($blkputRet, $err) = Qiniuyun_Rio_Mkblock($self, $QINIU_UP_HOST, $body, $bsize);
+            list($blkputRet, $err) = Qiniuyun_Rio_Mkblock($self, $QINIUYUN_UP_HOST, $body, $bsize);
             if ($err === null) {
                 break;
             }
@@ -152,7 +152,7 @@ function Qiniuyun_Rio_Put($upToken, $key, $body, $fsize, $putExtra) // => ($putR
 
     $putExtra->Progresses = $progresses;
 
-    return Qiniuyun_Rio_Mkfile($self, $QINIU_UP_HOST, $key, $fsize, $putExtra);
+    return Qiniuyun_Rio_Mkfile($self, $QINIUYUN_UP_HOST, $key, $fsize, $putExtra);
 }
 
 function Qiniuyun_Rio_PutFile($upToken, $key, $localFile, $putExtra) // => ($putRet, $err)

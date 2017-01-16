@@ -16,7 +16,7 @@ class Qiniuyun_PutExtra
 
 function Qiniuyun_Put($upToken, $key, $body, $putExtra) // => ($putRet, $err)
 {
-    global $QINIU_UP_HOST;
+    global $QINIUYUN_UP_HOST;
 
     if ($putExtra === null) {
         $putExtra = new Qiniuyun_PutExtra;
@@ -42,7 +42,7 @@ function Qiniuyun_Put($upToken, $key, $body, $putExtra) // => ($putRet, $err)
 
     $client = new Qiniuyun_HttpClient;
 
-    return Qiniuyun_Client_CallWithMultipartForm($client, $QINIU_UP_HOST, $fields, $files);
+    return Qiniuyun_Client_CallWithMultipartForm($client, $QINIUYUN_UP_HOST, $fields, $files);
 }
 
 function createFile($filename, $mime)
@@ -64,7 +64,7 @@ function createFile($filename, $mime)
 
 function Qiniuyun_PutFile($upToken, $key, $localFile, $putExtra) // => ($putRet, $err)
 {
-    global $QINIU_UP_HOST;
+    global $QINIUYUN_UP_HOST;
 
     if ($putExtra === null) {
         $putExtra = new Qiniuyun_PutExtra;
@@ -90,7 +90,7 @@ function Qiniuyun_PutFile($upToken, $key, $localFile, $putExtra) // => ($putRet,
 
     $client = new Qiniuyun_HttpClient;
 
-    return Qiniuyun_Client_CallWithForm($client, $QINIU_UP_HOST, $fields, 'multipart/form-data');
+    return Qiniuyun_Client_CallWithForm($client, $QINIUYUN_UP_HOST, $fields, 'multipart/form-data');
 }
 
 // ----------------------------------------------------------
