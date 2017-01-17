@@ -58,10 +58,10 @@ require $blogpath . 'zb_system/admin/admin_top.php';
           <td><p><b>· 上传区域</b><br/>
               <span class="note">&nbsp;如果您要使用http://<?php echo qiniuyun_display_text('bucket')?>.qiniudn.com，请留空。不写协议【http://】或【https://】将默认为http。</p></td>
           <td><select name="qiniu-upload-domain">
-              <?php qiniuyun_output_option('http://upload.qiniu.com', 'upload_domain', '默认（可能无法成功）');?>
-              <?php qiniuyun_output_option('http://up-z0.qiniu.com', 'upload_domain', '华东(http://up-z0.qiniu.com)');?>
+              <?php qiniuyun_output_option('http://upload.qiniu.com', 'upload_domain', '华东(http://upload.qiniu.com)');?>
               <?php qiniuyun_output_option('http://up-z1.qiniu.com', 'upload_domain', '华北(http://up-z1.qiniu.com)');?>
               <?php qiniuyun_output_option('http://up-z2.qiniu.com', 'upload_domain', '华南(http://up-z2.qiniu.com)');?>
+              <?php qiniuyun_output_option('http://up-na0.qiniu.com', 'upload_domain', '北美(http://up-na0.qiniu.com)');?>
           </select>
         </tr>
         <tr>
