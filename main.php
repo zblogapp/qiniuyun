@@ -56,7 +56,7 @@ require $blogpath . 'zb_system/admin/admin_top.php';
         </tr>
         <tr>
           <td><p><b>· 上传区域</b><br/>
-              <span class="note">&nbsp;如果您要使用http://<?php echo qiniuyun_display_text('bucket')?>.qiniudn.com，请留空。不写协议【http://】或【https://】将默认为http。</p></td>
+              <span class="note">&nbsp;见“空间设置” - “存储区域”</p></td>
           <td><select name="qiniu-upload-domain">
               <?php qiniuyun_output_option('http://upload.qiniu.com', 'upload_domain', '华东(http://upload.qiniu.com)');?>
               <?php qiniuyun_output_option('http://up-z1.qiniu.com', 'upload_domain', '华北(http://up-z1.qiniu.com)');?>
@@ -76,7 +76,7 @@ require $blogpath . 'zb_system/admin/admin_top.php';
         </tr>
         <tr>
           <td><p><b>· 图片样式</b><br/>
-              <span class="note">&nbsp;见七牛后台“图片样式”，若在插件后台开启水印则优先显示水印。另外，“图片样式”功能开启后，缩略图函数将无法使用，你只能在模板里手动获取图片Url后添加图片样式。</p></td>
+              <span class="note">&nbsp;见七牛后台“图片样式”，若在插件后台开启水印则优先显示水印。另外，“图片样式”功能开启后，缩略图函数将无法使用，你只能在模板里手动获取图片Url后添加图片样式。默认样式分隔符为“-”。</p></td>
           <td><input type="text" id="text-image-style" name="qiniu-image-style" value="<?php echo qiniuyun_display_text('image_style')?>" /></td>
         </tr>
       </table>

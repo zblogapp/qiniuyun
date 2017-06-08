@@ -40,7 +40,7 @@ function qiniuyun_upload_url(&$upload) {
 function qiniuyun_upload_savefile($tmp, &$upload) {
     init_qiniuyun();
     global $zbp;global $qiniuyun;
-    $file_path = $zbp->usersdir . 'upload/zbp.qiniutmp.' . time();
+    $file_path = $zbp->usersdir . 'upload/zbp.qiniutmp.' . time() . '.' . mt_rand(0, 9999);
     $file_name = date("Ymd", time()) . mt_rand(1000, 9999) . '_' . mt_rand(0, 10000) . '.' . GetFileExt($upload->SourceName);
     $upload_water = ($qiniuyun->water_enable && $qiniuyun->water_overwrite);
 
